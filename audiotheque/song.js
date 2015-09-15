@@ -28,6 +28,7 @@ Song.prototype.set = function ( data ) {
   this.duration = data.duration;
   this.year = data.year;
   this.genre = data.genre;
+  this.ytid = data.ytid;
 }
 
 /**

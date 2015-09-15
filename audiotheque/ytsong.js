@@ -12,10 +12,10 @@ const ERROR = "ERROR";
 
 /**
  * Download a song from Youtube
- * @param <String> url
+ * @param <String> ytid
  * @param <String> output_filename
  */
-function YTSong( url, output_filename ) {
+function YTSong( ytid, output_filename ) {
   Song.call( this, {}, null, 'youtube' );
   
   this.status = DOWNLOADING;
@@ -29,7 +29,7 @@ function YTSong( url, output_filename ) {
       //"--embed-thumbnail",
       "--newline",
       "--write-info-json",
-      url
+      "http://www.youtube.com/watch?v=" + ytid
     ]
   );
   
@@ -83,6 +83,11 @@ YTSong.prototype.onData = function ( data ) {
           }
         }
       }).bind( this ));
+    }
+  }
+  else if ( data.match( /^\[youtube\]/ ) ) {
+    if ( d = data.match( /^\[youtube\] +(.+):/ ) ) {
+      //this.ytid = d[1].trim();
     }
   }
 };

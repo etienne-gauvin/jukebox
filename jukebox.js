@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /**
  * Modules
  */
@@ -16,7 +14,7 @@ automkdir( config.songs_directory );
 automkdir( config.dl_directory );
 
 /**
- * Server
+ * WebRemote Server
  */
 var server = require("./webremote/bin/www");
 
@@ -28,7 +26,7 @@ var audiotheque = require("./audiotheque");
 /**
  * Test
  */
-audiotheque.downloadYTSong( "https://www.youtube.com/watch?v=OI2CRYjLprY" );
+//audiotheque.downloadYTSong( "OI2CRYjLprY" );
 
 
 /**

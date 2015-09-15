@@ -8,9 +8,9 @@ var YTSong = require( './ytsong' );
 
 function Audiotheque( config ) {
   EventEmitter.call( this );
-  
+
   this.config = config;
-  
+
   // Opening & creating database
   this.db = new sqlite3.Database( config.db_filename );
   this.db.exec( "CREATE TABLE IF NOT EXISTS `songs` ("
@@ -22,12 +22,16 @@ function Audiotheque( config ) {
     + "`year`	INTEGER,"
     + "`genre`	TEXT,"
     + "`filename`	TEXT NOT NULL,"
+    + "`ytid`	TEXT,"
     + "`source`	TEXT NOT NULL DEFAULT 'local'"
     + ");" );
-  
+
   // Inserting a new song statement
-  this.insertSongStmt = this.db.prepare( "INSERT INTO songs (title, artist, albumartist, duration, year, genre, filename, source) VALUES (?, ?, ?, ?, ?, ?, ?, ?)" );
-  
+  this.insertSongStmt = this.db.prepare( "INSERT INTO songs (title, artist, albumartist, duration, year, genre, filename, source, ytid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)" );
+
+  // Find one song statement
+  this.findOneStmt = this.db.prepare( "SELECT * FROM songs WHERE ytid=? OR id=? LIMIT 1" );
+
 }
 
 util.inherits( Audiotheque, EventEmitter) ;
@@ -36,19 +40,19 @@ util.inherits( Audiotheque, EventEmitter) ;
  * Get a music from Youtube
  * @param <String> url
  */
-Audiotheque.prototype.downloadYTSong = function ( url ) {
+Audiotheque.prototype.downloadYTSong = function ( ytid ) {
   var output_filename = path.join( this.config.dl_directory, "%(title)s-%(id)s.%(ext)s" );
-  
-  var ytsong = new YTSong( url, output_filename );
+
+  var ytsong = new YTSong( ytid, output_filename );
   console.log( "starting a youtube download" );
-  
+
   ytsong.on( 'error', function ( event ) {
     console.warn( event );
   } );
-  
-  ytsong.on( 'end', (function ( event ) {
+
+  ytsong.on( 'end', ( function ( event ) {
     console.log( "sond titled " + ytsong.title + " valid = " + ytsong.isValid() );
-    
+
     if ( event === 0 ) {
       this.saveSong( ytsong );
     }
@@ -60,20 +64,39 @@ Audiotheque.prototype.downloadYTSong = function ( url ) {
  * @param <Song> song
  */
 Audiotheque.prototype.saveSong = function ( song ) {
-  if ( song.isValid() ) {
-    this.insertSongStmt.run( [
-      song.title,
-      song.artist,
-      song.albumartist,
-      song.duration || 0,
-      song.year,
-      song.genre,
-      song.filename,
-      song.source
-    ], ( function ( data ) {
-      console.log( "song saved", data );
-    }).bind( this ) );
-  }
+  this.findOne( song, ( function( err, row ) {
+    if ( ! row && song.isValid() ) {
+      this.insertSongStmt.run( [
+        song.title,
+        song.artist,
+        song.albumartist,
+        song.duration || 0,
+        song.year,
+        song.genre,
+        song.filename,
+        song.source,
+        song.ytid
+      ], ( function ( err ) {
+        if ( err ) {
+          console.error( "song not saved in db : ", err );
+        }
+        else {
+          console.log( "song saved" );
+        }
+      }).bind( this ) );
+    }
+  } ).bind( this ) );
+};
+
+/**
+ * Find a song in db
+ * @param <Song> song : {ytid, id}
+ */
+Audiotheque.prototype.findOne = function ( song, callback ) {
+  this.findOneStmt.get( [
+    song.ytid,
+    song.id
+  ], callback );
 };
 
 module.exports = Audiotheque
