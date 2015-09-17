@@ -1,12 +1,9 @@
-/**
- * Modules
- */
 var fs = require( 'fs' );
 
 /**
  * Configuration
  */
-var config = require("./config");
+var config = require( "./config" );
 
 // Create directories if not found
 automkdir( config.base_directory );
@@ -14,19 +11,19 @@ automkdir( config.songs_directory );
 automkdir( config.dl_directory );
 
 /**
- * WebRemote Server
+ * HTTP Server (webremote)
  */
-var server = require("./webremote/bin/www");
+var server = require( "./webserver" );
 
 /**
- * Audiotheque
+ * SongDB
  */
-var audiotheque = require("./audiotheque");
+var songdb = require( "./songdb" );
 
 /**
  * Test
  */
-//audiotheque.downloadYTSong( "OI2CRYjLprY" );
+//songdb.downloadWSong( "OI2CRYjLprY" );
 
 
 /**
@@ -35,8 +32,7 @@ var audiotheque = require("./audiotheque");
 function automkdir( dir ) {
   try {
     var stat = fs.statSync( dir );
-  }
-  catch ( e ) {
+  } catch ( e ) {
     console.log( "mkdir " + dir );
     fs.mkdirSync( dir );
   }

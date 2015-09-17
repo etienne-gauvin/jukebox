@@ -1,0 +1,153 @@
+@charset "UTF-8";
+/* line 3, style.scss */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-size: 1em;
+  font-family: "Droid Sans", sans-serif;
+}
+
+/* line 10, style.scss */
+html {
+  min-width: 320px;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+/* line 17, style.scss */
+body {
+  margin: auto;
+  width: 33%;
+  background-color: #333;
+}
+
+/* line 25, style.scss */
+h1 {
+  color: #5aa73f;
+  font-family: serif;
+  text-align: center;
+}
+/* line 30, style.scss */
+h1:before, h1:after {
+  content: " ⋆ ";
+}
+
+/* line 36, style.scss */
+form.req_song input[type="submit"], form.req_song input[type="url"] {
+  border: 0;
+  padding: 0.2em 0.5em;
+  font-size: 1em;
+  margin: 0;
+  box-sizing: border-box;
+  outline: 0;
+  border: 2px solid;
+}
+/* line 46, style.scss */
+form.req_song input[type="url"] {
+  background-color: white;
+  border-color: white;
+  width: calc( 100% - 40px );
+}
+/* line 51, style.scss */
+form.req_song input[type="url"]:not([disabled]):focus {
+  border-color: #5aa73f;
+}
+/* line 56, style.scss */
+form.req_song input[type="submit"] {
+  width: 40px;
+  font-weight: bold;
+  color: white;
+  background-color: #609c4b;
+  border-color: #609c4b;
+}
+/* line 63, style.scss */
+form.req_song input[type="submit"]:not([disabled]):hover, form.req_song input[type="submit"]:not([disabled]):focus {
+  background-color: #5aa73f;
+  border-color: #5aa73f;
+  cursor: pointer;
+}
+/* line 70, style.scss */
+form.req_song [disabled] {
+  background-image: url("../images/disabled.png");
+}
+
+/* line 75, style.scss */
+ul.playlist {
+  list-style: none;
+  padding: 0;
+}
+/* line 79, style.scss */
+ul.playlist li.song {
+  border: 0;
+  padding: 0.2em 0.5em;
+  font-size: 1em;
+  margin: 0 0 2px;
+  box-sizing: border-box;
+  outline: 0;
+  border: 2px solid;
+  background-color: white;
+  border-color: white;
+}
+/* line 91, style.scss */
+ul.playlist li.song.downloading {
+  background-image: url("../images/disabled.png");
+  color: #666;
+  animation: animatedBackground 400ms linear infinite;
+}
+/* line 97, style.scss */
+ul.playlist li.song.error {
+  background-image: url("../images/disabled.png");
+  opacity: 0.6;
+}
+/* line 101, style.scss */
+ul.playlist li.song.error strong.title {
+  text-decoration: line-through;
+  color: #9a0000;
+}
+/* line 107, style.scss */
+ul.playlist li.song strong.title {
+  font-weight: normal;
+}
+/* line 111, style.scss */
+ul.playlist li.song .percent {
+  font-size: 0.6em;
+  margin-left: 0.5em;
+  color: #AAA;
+}
+/* line 117, style.scss */
+ul.playlist li.song a.source {
+  float: right;
+  text-decoration: none;
+  color: #AAA;
+}
+/* line 122, style.scss */
+ul.playlist li.song a.source:hover, ul.playlist li.song a.source:active {
+  color: #5aa73f;
+}
+/* line 127, style.scss */
+ul.playlist li.song:not(:hover) a.source {
+  display: none;
+}
+/* line 131, style.scss */
+ul.playlist li.song p.uploader {
+  font-size: 0.6em;
+  margin: 0.2em 0 0;
+  color: #5aa73f;
+  font-style: italic;
+}
+/* line 137, style.scss */
+ul.playlist li.song p.uploader:empty {
+  display: none;
+}
+
+@keyframes animatedBackground {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 6px 6px;
+  }
+}
+
+/*# sourceMappingURL=style.css.map */

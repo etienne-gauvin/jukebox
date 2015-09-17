@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>jukebox</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>jukebox</h1>
+
+    <p>Playing: <em id="cursong_title">nothing</em></p>
+
+    <form id="req_song_form" class="req_song">
+      <input id="req_song_url" type="url" placeholder="http://" required disabled /><!--
+   --><input type="submit" title="Load and add song" value="+" disabled />
+    </form>
+
+    <ul id="playlist" class="playlist">
+
+    </ul>
+
+    <script src="/javascripts/zepto.min.js"></script>
+    <script src="/javascripts/socket.io.js"></script>
+    <script src="/javascripts/jukebox.js"></script>
+  </body>
+</html>

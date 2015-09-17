@@ -1,0 +1,147 @@
+// out: ./style.css, sourcemap: true, compress: true
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-size: 1em;
+  font-family: "Droid Sans", sans-serif;
+}
+
+html {
+  min-width: 320px;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+body {
+  margin: auto;
+  width: 33%;
+  background-color: #333;
+}
+
+$light_color: #5aa73f;
+
+h1 {
+  color: $light_color;
+  font-family: serif;
+  text-align: center;
+
+  &:before, &:after {
+    content: " ⋆ ";
+  }
+}
+
+form.req_song {
+  input[type="submit"], input[type="url"] {
+    border: 0;
+    padding: 0.2em 0.5em;
+    font-size: 1em;
+    margin: 0;
+    box-sizing: border-box;
+    outline: 0;
+    border: 2px solid;
+  }
+
+  input[type="url"] {
+    background-color: white;
+    border-color: white;
+    width: calc( 100% - 40px );
+
+    &:not([disabled]):focus {
+      border-color: $light_color;
+    }
+  }
+
+  input[type="submit"] {
+    width: 40px;
+    font-weight: bold;
+    color: white;
+    background-color: desaturate($light_color, 10%);
+    border-color: desaturate($light_color, 10%);
+
+    &:not([disabled]):hover, &:not([disabled]):focus {
+      background-color: $light_color;
+      border-color: $light_color;
+      cursor: pointer;
+    }
+  }
+
+  [disabled] {
+    background-image: url("../images/disabled.png");
+  }
+}
+
+ul.playlist {
+  list-style: none;
+  padding: 0;
+
+  li.song {
+    border: 0;
+    padding: 0.2em 0.5em;
+    font-size: 1em;
+    margin: 0 0 2px;
+    box-sizing: border-box;
+    outline: 0;
+    border: 2px solid;
+
+    background-color: white;
+    border-color: white;
+
+    &.downloading {
+      background-image: url("../images/disabled.png");
+      color: #666;
+      animation: animatedBackground 400ms linear infinite;
+    }
+
+    &.error {
+      background-image: url("../images/disabled.png");
+      opacity: 0.6;
+
+      strong.title {
+        text-decoration: line-through;
+        color: #9a0000;
+      }
+    }
+
+    strong.title {
+      font-weight: normal;
+    }
+
+    .percent {
+      font-size: 0.6em;
+      margin-left: 0.5em;
+      color: #AAA;
+    }
+
+    a.source {
+      float: right;
+      text-decoration: none;
+      color: #AAA;
+
+      &:hover, &:active {
+        color: $light_color;
+      }
+    }
+
+    &:not(:hover) a.source {
+      display: none;
+    }
+
+    p.uploader {
+      font-size: 0.6em;
+      margin: 0.2em 0 0;
+      color: $light_color;
+      font-style: italic;
+
+      &:empty {
+        display: none;
+      }
+    }
+  }
+}
+
+@keyframes animatedBackground {
+    0% { background-position: 0 0; }
+    100% { background-position: 6px 6px; }
+}
