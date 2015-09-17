@@ -4,8 +4,8 @@
 
 ### Linux
 
-* Install nodejs + npm
-* Install youtube-dl
+* Install [nodejs and npm](https://nodejs.org/)
+* Install [youtube-dl](https://rg3.github.io/youtube-dl/)
 
 ## Utilisation
 
